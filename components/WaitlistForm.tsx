@@ -3,13 +3,16 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+import { isWaitlistRole, WAITLIST_ROLE_OPTIONS } from '@/lib/waitlist/client'
+import type { WaitlistApiResponse, WaitlistRole } from '@/lib/waitlist/types'
+
 interface WaitlistFormProps {
   ctaLabel?: string
 }
 
 export default function WaitlistForm({ ctaLabel = 'Request access →' }: WaitlistFormProps) {
   const [email, setEmail] = useState('')
-  const [role, setRole] = useState('founder')
+  const [role, setRole] = useState<WaitlistRole>('founder')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [message, setMessage] = useState('')
 
@@ -22,14 +25,14 @@ export default function WaitlistForm({ ctaLabel = 'Request access →' }: Waitli
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, role }),
       })
-      const data = await res.json()
+      const data: WaitlistApiResponse = await res.json()
       if (res.ok) {
         setStatus('success')
-        setMessage(data.message)
+        setMessage('message' in data ? data.message : "You're on the list. We'll be in touch.")
         setEmail('')
       } else {
         setStatus('error')
-        setMessage(data.error)
+        setMessage('error' in data ? data.error : 'Something went wrong. Please try again.')
       }
     } catch {
       setStatus('error')
@@ -68,13 +71,19 @@ export default function WaitlistForm({ ctaLabel = 'Request access →' }: Waitli
             />
             <select
               value={role}
-              onChange={(e) => setRole(e.target.value)}
+              onChange={(e) => {
+                if (isWaitlistRole(e.target.value)) {
+                  setRole(e.target.value)
+                }
+              }}
               aria-label="I am a"
               className="bg-transparent border-0 px-3 py-3 text-sm outline-none cursor-pointer text-muted"
             >
-              <option value="founder">I&apos;m a Founder</option>
-              <option value="vc">I&apos;m a VC / Angel</option>
-              <option value="lp">I&apos;m an LP</option>
+              {WAITLIST_ROLE_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
             <button
               type="submit"
