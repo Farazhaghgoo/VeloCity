@@ -81,18 +81,18 @@ export default function Header() {
 
           {/* CTA + Hamburger */}
           <div className="flex items-center gap-2.5">
-            <button
-              onClick={() => scrollTo('#waitlist')}
+            <a
+              href="/login"
               className="hidden sm:flex items-center justify-center px-4 py-2.5 rounded-[10px] text-sm font-semibold border border-line-2 text-txt hover:border-accent/50 bg-transparent transition-all duration-150 cursor-pointer"
             >
               Sign in
-            </button>
-            <button
-              onClick={() => scrollTo('#waitlist')}
+            </a>
+            <a
+              href="/signup"
               className="hidden sm:flex items-center justify-center px-4 py-2.5 rounded-[10px] text-sm font-semibold bg-accent text-[#243B53] border border-accent hover:bg-[#34a97d] hover:border-[#34a97d] transition-all duration-150 cursor-pointer"
             >
               Request access
-            </button>
+            </a>
 
             {/* Hamburger */}
             <button
@@ -134,8 +134,8 @@ export default function Header() {
                 </motion.button>
               ))}
               <div className="flex gap-2.5 mt-4 pt-4 border-t border-line">
-                <button onClick={() => { scrollTo('#waitlist'); setMenuOpen(false) }} className="flex-1 py-3 rounded-xl text-sm font-semibold border border-line-2 text-txt hover:border-accent/50 bg-transparent transition-all duration-150 cursor-pointer">Sign in</button>
-                <button onClick={() => { scrollTo('#waitlist'); setMenuOpen(false) }} className="flex-1 py-3 rounded-xl text-sm font-semibold bg-accent text-[#243B53] border border-accent hover:bg-[#34a97d] transition-all duration-150 cursor-pointer">Request access</button>
+                <a href="/login" className="flex-1 py-3 rounded-xl text-sm font-semibold border border-line-2 text-txt hover:border-accent/50 bg-transparent transition-all duration-150 cursor-pointer text-center">Sign in</a>
+                <a href="/signup" className="flex-1 py-3 rounded-xl text-sm font-semibold bg-accent text-[#243B53] border border-accent hover:bg-[#34a97d] transition-all duration-150 cursor-pointer text-center">Request access</a>
               </div>
             </nav>
           </motion.div>
