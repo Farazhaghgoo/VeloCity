@@ -25,9 +25,12 @@ export default function LoginForm() {
       const data: AuthApiResponse = await res.json()
 
       if (res.ok && data.success) {
-        // Redirect to dashboard or the page they came from
+        // Only redirect to a same-origin relative path to prevent open redirects
         const params = new URLSearchParams(window.location.search)
-        window.location.href = params.get('from') ?? '/dashboard'
+        const from = params.get('from')
+        const destination =
+          from && from.startsWith('/') && !from.startsWith('//') ? from : '/dashboard'
+        window.location.href = destination
       } else {
         setStatus('error')
         setErrorMsg('error' in data ? data.error : 'Something went wrong. Please try again.')

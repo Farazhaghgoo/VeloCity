@@ -1,6 +1,7 @@
 import { AUTH_ROLES, type AuthRole, type SignupInput, type LoginInput } from './types'
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+// Each label bounded at 63 chars, dots explicit — avoids ReDoS from nested negation classes.
+const EMAIL_PATTERN = /^[^\s@]{1,64}@[^\s@.]{1,63}(?:\.[^\s@.]{1,63})+$/
 const AUTH_ROLE_SET = new Set<string>(AUTH_ROLES)
 
 type ParseResult<T> = { ok: true; value: T } | { ok: false; error: string }
