@@ -1,23 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import SmoothScroll from '@/components/SmoothScroll'
 import ScrollRestoration from '@/components/ScrollRestoration'
 import ScrollProgress from '@/components/ScrollProgress'
 import PageLoader from '@/components/PageLoader'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
-
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-plus-jakarta',
-  display: 'swap',
-})
 
 const siteUrl = 'https://velocityvc.com'
 
@@ -61,8 +47,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${plusJakarta.variable}`}>
-      <body style={{ fontFamily: 'var(--font-inter), system-ui, sans-serif' }}>
+    <html lang="en">
+      <body style={{ fontFamily: 'Inter, system-ui, -apple-system, sans-serif' }}>
           <PageLoader />
           <ScrollProgress />
           <ScrollRestoration />
